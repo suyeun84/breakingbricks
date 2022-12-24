@@ -1,0 +1,23 @@
+#item{
+	position: absolute;
+	width: 800px;
+	height: 200px;
+	left: auto;
+	display: none;
+}
+#itemresult{
+	display: inline-block;
+	position: relative;
+	left: 10px;
+	width: 350px;
+	height: 30px;
+	font-size: 18px;
+	font-family: 'CookieRun-Regular', cursive;
+}
+#itemresultzone *{
+	float: left;
+}
+#itemresultzone button{
+	width: 100px;
+	height: 30px;
+}
