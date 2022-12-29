@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Web Programming assignment</title>
+
+	<link rel="stylesheet" type="text/css" href = "breakingbricks.css">
+	<link rel="stylesheet" type="text/css" href="prolog.css">
+	<link rel="stylesheet" type="text/css" href="game.css">
+	<link rel="stylesheet" type="text/css" href="item.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script defer src = "breakingbricks.js"></script>
+	<script defer src="prolog.js"></script>
+	<script defer src="onclick.js"></script>
+	<script defer src="item.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&family=
+	Gugi&family=Nanum+Brush+Script&family=Nanum+Pen+Script&family=
+	Hahmlet:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div id="page-wrapper">
+		<audio id='bg'src="audio/BeethovenSonata.mp3" volume="0.5" autoplay loop="true"></audio>
+
+		<!-- 프롤로그 -->
+		<div id="prologcontent">
+			<div id="prolog">
+				<div id="proimgdiv">
+					<img id="proimg" height="330px">
+				</div>
+				<div id="protext">
+					<div id="textin"></div>
+				</div>
+			</div>
+
+			<div id="probut">
+				<img src="image/next.png" width="50px" height="50px">
+			</div>
+			<div id="proskip">
+				<button id="proskipbut">스킵</button>
+			</div>
+			
+			<div id="procomment">
+				<div id="com1" class="com">이게 천재냐.</div>
+				<div id="com2" class="com">음표들이 불쌍하지도 않냐!</div>
+				<div id="com3" class="com">내가 더 잘하겠다!</div>
+				<div id="com4" class="com">파이팅!</div>
+				<div id="com5" class="com">운이 좋았던 거였군.</div>
+			</div>
+		</div>
+
+		<!-- 메인 메뉴 -->
+		<div id="content">
+			<h1>음악을 만들어 보자!</h1>
+			<input id="mainmenu" type="button" name="tab">
+			<input id="startgame" type="button" name="tab">
+			<input id="inform" type="button" name="tab">
+			<input id="score" type="button" name="tab">
+			<input id="setup" type="button" name="tab">
+			<input id="endgame" type="button" name="tab">
+
+			<section class="tab-title">
+				<label for="startgame">게임 시작</label>
+				<label for="inform">게임 정보</label>
+				<label for="score">점수 보기</label>
+				<label for="setup">환경 설정</label>
+				<label for="endgame">게임 종료</label>
+			</section>	
+		</div>
+
+		<!-- 게임 시작 -->
+		<div id="level">
+			<div class="selectlevel">
+				<img src="image/Debussy.jpeg" />
+				<div class="leveltext">
+				<h2>Level 1</h2><h3>드뷔시</h3>
+				</div>
+			</div>
+
+				<div class="selectlevel">
+				<img src="image/Beethoven.jpeg" />
+				<div class="leveltext">
+				<h2>Level 2</h2><h3>베토벤</h3>
+				</div>
+			</div>
+
+			<div class="selectlevel">
+				<img src="image/Mozart.jpeg" />
+				<div class="leveltext">
+				<h2>Level 3</h2><h3>모차르트</h3>
+				</div>
+			</div>
+		</div>
+
+		<div id="item">
+			<div id="itemresultzone">
+				<img src="image/Mozart.jpeg" width="30px" height="30px" id="itemsrc">
+				<div id="itemresult">획득한 아이템이 없습니다.</div>
+			</div>
+		</div>
+		<div id="gamecontent">
+			<canvas id="myCanvas" width="800" height="500"></canvas>		
+		</div>
+		<div id = "whenlose" class ="result">
+			<div>
+				<table class = "resultctx" >
+					<tr>
+						<td id = "resulttext" ><h1>실패</h1><h1 id ="reason"></h1></td>
+					</tr>
+					<tr>
+						<td><img src = "image/wake.jpg"  height="300px"></td>
+					</tr>
+					<tr>
+						<td><button class="replaygame" onclick="replaygame()">게임 다시하기</button>
+						<button class="backmenu" onclick="backtomain()">메인 메뉴</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div id = "whenwin" class ="result">
+			<div id = "wintext">
+				<table class = "resultctx">
+					<tr>
+						<td id = "resulttext" ><h1>성공</h1><h1 id ="winreason"></h1></td>
+					</tr>
+					<tr>
+						<td><img src = "image/cheering.jpg" height="300px" /></td>
+
+					</tr>
+					<tr>
+						<td><button class="openscore" onclick="openscore()">등수 보러가기</button>
+						<button class="backmenu" onclick="backtomain();">메뉴로 돌아가기</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div class="popup1" id="tonextlevel">
+			<h3>다음단계로 넘어갑니다.</h3>
+			<button id="okay">확인</button>
+		</div>
+		<!-- 게임 정보 -->
+		<div id="gameinfo">
+			<div id="infocontent"></div>
+			<img src="image/back.png" class="backimg" onclick="backtomain();">
+		</div>
+
+		<!-- 점수 보기 -->
+		<div id="showscore">
+			<div id="scorecontent"></div>
+			<img src="image/back.png" class="backimg" onclick="backtomain();">
+		</div>
+
+		<!-- 환경 설정 -->
+		<div id="setting" class="popup">
+			<button id="settingclose">x</button>
+			<div class="option" id="ballcolor">
+				<h3>공 색</h3>
+				<div id="colorTable"></div>
+			</div>
+			<div class="option">
+				<h3>음표 모양 선택</h3>  
+				<button class="selectnote" id="note"><img src="image/note.png" width="50px" height="50px"></button>
+				<button class="selectnote" id="note1"><img src="image/note1.png" width="50px" height="50px"></button>
+			</div>
+			<div class="option">
+				<h3>배경음</h3>
+				<input type="range" id="music_volume" min="0.0" max="1.0" step="0.1" onchange="music_volume()" oninput="music_volume()">
+				<h3>효과음</h3>
+				<input type="range" id="effect_volume" min="0.0" max="1.0" step="0.1" onchange="effect_volume()" oninput="effect_volume()">
+			</div>
+		</div>
+	</div>
+</body>
+</html>
